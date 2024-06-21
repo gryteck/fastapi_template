@@ -1,0 +1,27 @@
+version: "3.5"
+name: app_service
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    networks:
+      - app_net
+    env_file:
+      - .env
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    networks:
+      - app_net
+    depends_on:
+      - app
+    ports:
+      - "8081:81"
+
+networks:
+  app_net:
+    name: app_net
