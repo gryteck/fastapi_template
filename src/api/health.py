@@ -2,9 +2,12 @@ import logging
 
 from fastapi import APIRouter, status
 
+from src.services.health import HealthService
+
 router = APIRouter()
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
+
 
 @router.get(
     "/",
@@ -13,4 +16,4 @@ logger.setLevel(logging.DEBUG)
     summary="Проверка доступности сервиса",
 )
 async def protected():
-    return {"detail":"App is alive"}
+    return await HealthService.get_health()
